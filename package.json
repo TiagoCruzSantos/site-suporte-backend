@@ -1,0 +1,21 @@
+{
+  "name": "site-suporte-backend",
+  "version": "1.0.0",
+  "description": "Criação de um clone do site do suporte para estudos de React.js e API backend com Express e Node.js",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "author": "Tiago Cruz",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.10",
+    "pg": "^7.18.2"
+  },
+  "devDependencies": {}
+}
