@@ -4,7 +4,7 @@
   "description": "Criação de um clone do site do suporte para estudos de React.js e API backend com Express e Node.js",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --trace-sync-io src/index.js",
     "start": "node src/index.js"
   },
   "author": "Tiago Cruz",
