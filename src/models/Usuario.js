@@ -33,21 +33,15 @@ class Usuario {
         return UserObj
     }
 
-    static async login(email, senha){
-        const user = await Usuario.pullEmail(email)
-        if(user === undefined){
-            return {
-                erro: "Login invalido",
-                logado: false
-            }
-        }
-        const pass = await bcrypt.compare(senha, user.senha)
+    async login(senha){
+        const pass = await bcrypt.compare(senha, this.senha)
         if(pass){
             const jwt = await jwtP.jwtSign({
-                id: user.id
+                id: this.id,
+                tipo: this.tipo
             })
             return {
-                JWT: jwt,
+                jwt: jwt,
                 logado: true
             }
         }
@@ -55,6 +49,19 @@ class Usuario {
             erro: "Login invalido",
             logado: false
         }
+    }
+
+    async save(){
+        return await knex("usuarios").insert({
+            nome: this.nome,
+            email: this.email,
+            senha: this.senha,
+            tipo: this.tipo
+        }).returning("id", "nome", "email", "tipo")
+    }
+
+    static async listAll(){
+        return await knex("usuarios").select("id", "nome", "tipo")
     }
 }
 

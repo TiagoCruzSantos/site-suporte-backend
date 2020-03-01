@@ -3,20 +3,34 @@ const Usuario = require("./Usuario")
 
 class Suporte extends Usuario {
     constructor(id, nome, email, senha){
-        super(id, nome, email, senha)
+        super(id, nome, email, senha, 'SUP')
     }
 
-    static async pullId(_id){
-        let user = await knex.select("id", "nome", "email", "senha", "tipo").from("usuarios").where({
-            id: _id,
-            tipo: 'SUP'
-        }).limit(1)
-        if(user.length === 0){
-            return undefined
+    static async pullId(id){
+        let user = await Usuario.pullId(id)
+        if(user.tipo === 'SUP'){
+            return new Suporte(user.id, user.nome, user.email, user.senha)
         }
-        let UserObj = new Suporte(user[0].id, user[0].nome, user[0].email, user[0].senha)
-        return UserObj
+        return undefined
     }
+
+    static async pullEmail(email){
+        let user = await Usuario.pullEmail(email)
+        if(user.tipo === 'SUP'){
+            return new Suporte(user.id, user.nome, user.email, user.senha)
+        }
+        return undefined
+    }
+    
+    static async listAll(){
+        return await knex("usuarios").select("id", "nome", "tipo").where({
+            tipo: "SUP"
+        })
+    }
+
+    async desligarComputadores(){}
+    async ligarCoputadores(){}
+
 }
 
 module.exports = Suporte
