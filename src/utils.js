@@ -10,5 +10,16 @@ module.exports = {
                 return resolve(token)
             })
         })
+    },
+
+    jwtDecode(jwtCode){
+        return new Promise((resolve, reject) => {
+            jwt.verify(jwtCode, process.env.JWT_SECRET, (err, decoded) => {
+                if(err) {
+                    return reject(err)
+                }
+                resolve(decoded)
+            })
+        })
     }
 }

@@ -8,7 +8,7 @@ routes.post("/login", LoginController.login)
 // /usuarios
 routes.get("/usuarios/", UserController.listAll)
 routes.get("/usuarios/:tipo", UserController.listSpecific)
-
+routes.post("/usuarios/:tipo", UserController.newUser)
 // /aulas
 
 

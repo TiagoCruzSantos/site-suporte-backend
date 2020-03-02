@@ -6,6 +6,11 @@ class Professor extends Usuario {
         super(id, nome, email, senha, 'PROF')
     }
     
+    static async listAll(){
+        return await knex("usuarios").select("id", "nome", "tipo").where({
+            tipo: "PROF"
+        })
+    }
     
 }
 

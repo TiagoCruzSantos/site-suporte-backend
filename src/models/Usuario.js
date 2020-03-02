@@ -18,7 +18,7 @@ class Usuario {
         if(user.length === 0){
             return undefined
         }
-        let UserObj = new Usuario(user[0].id, user[0].nome, user[0].email, user[0].senha, user[0].tipo)
+        let UserObj = new this(user[0].id, user[0].nome, user[0].email, user[0].senha, user[0].tipo)
         return UserObj
     }
 
@@ -29,7 +29,7 @@ class Usuario {
         if(user.length === 0){
             return undefined
         }
-        let UserObj = new Usuario(user[0].id, user[0].nome, user[0].email, user[0].senha, user[0].tipo)
+        let UserObj = new this(user[0].id, user[0].nome, user[0].email, user[0].senha, user[0].tipo)
         return UserObj
     }
 
@@ -52,12 +52,13 @@ class Usuario {
     }
 
     async save(){
+        console.log(this.email)
         return await knex("usuarios").insert({
             nome: this.nome,
             email: this.email,
             senha: this.senha,
             tipo: this.tipo
-        }).returning("id", "nome", "email", "tipo")
+        },["id", "nome", "email", "tipo"])
     }
 
     static async listAll(){
