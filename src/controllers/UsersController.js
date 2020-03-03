@@ -34,7 +34,8 @@ module.exports = {
 
     async newUser(req, res){
         try{
-            let jwtDecoded = await utils.jwtDecode(req.body.jwt)
+            let jwtCoded = req.headers.authorization.split(" ")[1]
+            let jwtDecoded = await utils.jwtDecode(jwtCoded)
             let larUser = await Usuario.pullId(jwtDecoded.id)
             if(larUser.tipo === "LAR"){
                 const larCd = await Lar.pullId(jwtDecoded.id)
