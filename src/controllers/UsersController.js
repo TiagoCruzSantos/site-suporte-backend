@@ -35,10 +35,10 @@ module.exports = {
     async newUser(req, res){
         try{
             let jwtDecoded = await utils.jwtDecode(req.body.jwt)
-            if(jwtDecoded.tipo === "LAR"){
+            let larUser = await Usuario.pullId(jwtDecoded.id)
+            if(larUser.tipo === "LAR"){
                 const larCd = await Lar.pullId(jwtDecoded.id)
                 let resposta
-                console.log(req.body)
                 try{
                     switch(req.params.tipo){
                         case 'SUP':

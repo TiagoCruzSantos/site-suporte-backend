@@ -37,8 +37,7 @@ class Usuario {
         const pass = await bcrypt.compare(senha, this.senha)
         if(pass){
             const jwt = await jwtP.jwtSign({
-                id: this.id,
-                tipo: this.tipo
+                id: this.id
             })
             return {
                 jwt: jwt,
@@ -52,7 +51,6 @@ class Usuario {
     }
 
     async save(){
-        console.log(this.email)
         return await knex("usuarios").insert({
             nome: this.nome,
             email: this.email,
