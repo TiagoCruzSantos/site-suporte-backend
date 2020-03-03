@@ -36,20 +36,31 @@ module.exports = {
         try{
             let jwtCoded = req.headers.authorization.split(" ")[1]
             let jwtDecoded = await utils.jwtDecode(jwtCoded)
-            let larUser = await Usuario.pullId(jwtDecoded.id)
-            if(larUser.tipo === "LAR"){
-                const larCd = await Lar.pullId(jwtDecoded.id)
+            let larCd
+            try{
+                larCd = await Lar.pullId(jwtDecoded.id)
+            }catch(e){
+                res.status(403).json({
+                    erro: e.message
+                })
+            }
+            if(larCd.tipo === "LAR"){
                 let resposta
                 try{
                     switch(req.params.tipo){
                         case 'SUP':
                         case 'sup':
+                            console.log("?????")
                             resposta = await larCd.cadastrarSuporte(req.body.nome, req.body.email, req.body.senha)
                             break
                         case 'PROF':
                         case 'prof':
                             resposta = await larCd.cadastrarProfessor(req.body.nome, req.body.email, req.body.senha)
                             break
+                        default:
+                            resposta = {
+                                erro: "Tipo desconhecido"
+                            }
                     }
                 }catch(e){
                     return res.status(409).json({

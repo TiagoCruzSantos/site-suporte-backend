@@ -4,9 +4,13 @@ const knex = require("./index")
 const bcrypt = require('bcrypt')
 
 class Lar extends Suporte {
-    constructor(id, nome, email, senha){
-        super(id, nome, email, senha)
-        this.tipo = 'LAR'
+    constructor(id, nome, email, senha, tipo){
+        if(tipo === 'LAR'){
+            super(id, nome, email, senha)
+            this.tipo = 'LAR'
+        }else{
+            throw new TypeError("Não é lar")
+        }
     }
 
     static async listAll(){
