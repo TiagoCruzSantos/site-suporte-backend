@@ -34,23 +34,25 @@ module.exports = {
 
     async newUser(req, res){
         try{
+            // verificar JWT
             let jwtCoded = req.headers.authorization.split(" ")[1]
             let jwtDecoded = await utils.jwtDecode(jwtCoded)
             let larCd
+            // puxar lar da database
             try{
                 larCd = await Lar.pullId(jwtDecoded.id)
             }catch(e){
-                res.status(403).json({
+                return res.status(403).json({
                     erro: e.message
                 })
             }
             if(larCd.tipo === "LAR"){
                 let resposta
                 try{
+                    // cadastrar
                     switch(req.params.tipo){
                         case 'SUP':
                         case 'sup':
-                            console.log("?????")
                             resposta = await larCd.cadastrarSuporte(req.body.nome, req.body.email, req.body.senha)
                             break
                         case 'PROF':

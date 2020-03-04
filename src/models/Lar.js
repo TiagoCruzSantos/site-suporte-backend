@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 class Lar extends Suporte {
     constructor(id, nome, email, senha, tipo){
         if(tipo === 'LAR'){
-            super(id, nome, email, senha)
+            super(id, nome, email, senha, "SUP")
             this.tipo = 'LAR'
         }else{
             throw new TypeError("Não é lar")
@@ -21,13 +21,13 @@ class Lar extends Suporte {
 
     async cadastrarSuporte(nome, email, senha){
         let senhaBc = await bcrypt.hash(senha, 12)
-        let suporte = new Suporte(undefined, nome, email, senhaBc)
+        let suporte = new Suporte(undefined, nome, email, senhaBc, "SUP")
         return await suporte.save()
     }
 
     async cadastrarProfessor(nome, email, senha){
         let senhaBc = await bcrypt.hash(senha, 12)
-        let professor = new Professor(undefined, nome, email, senhaBc)
+        let professor = new Professor(undefined, nome, email, senhaBc, "PROF")
         return await professor.save()
     }
 
